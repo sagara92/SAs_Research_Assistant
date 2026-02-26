@@ -1,5 +1,5 @@
 ## My Research Assistant (RAG System)
-[![Streamlit App](https://sagara92-sas-research-assistant-app-q1kiqg.streamlit.app/)](https://sagara92-sas-research-assistant-app-q1kiqg.streamlit.app/)
+[:streamlit: Streamlit App](https://sagara92-sas-research-assistant-app-q1kiqg.streamlit.app/)
 
 Welcome to an end-to-end Retrieval-Augmented Generation (RAG) web app built to interactively answer questions related to my peer-reviewed publications. This project is an AI research assistant, which retrieves relevant responses from dense academic papers, researching Supermassive Black Holes, Active Galactic Nuclei (AGNs), Blazars, and QPO analysis of blazars.
 
