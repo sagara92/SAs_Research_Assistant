@@ -22,7 +22,34 @@ html_string = """
 """
 
 
-st.set_page_config(page_title="Physics Research Assistant", page_icon="🔭")
+st.set_page_config(page_title="Physics Research Assistant", page_icon="🔭", layout="wide")
+
+st.markdown("""
+<style>
+    .block-container { padding-top: 2rem; padding-bottom: 2rem; }
+    .stButton>button {
+        width: 100%;
+        border-radius: 20px;
+        border: 1px solid #1E88E5;
+        color: #1E88E5;
+        background-color: transparent;
+        transition: all 0.3s ease;
+    }
+    .stButton>button:hover { background-color: #1E88E5; color: white; border: 1px solid #1E88E5; }
+    h1 { color: #1E88E5; font-family: 'Inter', sans-serif; }
+</style>
+""", unsafe_allow_html=True)
+
+with st.sidebar:
+    st.image("https://upload.wikimedia.org/wikipedia/commons/c/c7/Google_Scholar_logo.svg", width=50)
+    st.title("About")
+    st.info(
+        "This AI assistant uses Retrieval-Augmented Generation (RAG) to answer questions based on my peer-reviewed publications."
+    )
+    st.divider()
+    st.markdown("**Research Focus:**")
+    st.markdown("- Supermassive Black Holes\n- Active Galactic Nuclei (AGNs)\n- Blazars\n- QPO Analysis")
+
 st.title("SA's Research Assistant")
 st.markdown(html_string, unsafe_allow_html=True)
 
@@ -96,8 +123,24 @@ if vector_store:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
+    # Example Questions
+    if len(st.session_state.messages) == 0:
+        st.markdown("<p style='color: #555; font-size: 1.1em;'>Not sure what to ask? Try one of these:</p>", unsafe_allow_html=True)
+        col1, col2, col3 = st.columns(3)
+        if col1.button("What is your research methodology?"):
+            st.session_state.example_prompt = "What is your research methodology?"
+        if col2.button("Summarize your findings on blazars."):
+            st.session_state.example_prompt = "Summarize your findings on blazars."
+        if col3.button("What experimental techniques do you use?"):
+            st.session_state.example_prompt = "What experimental techniques do you use?"
+
     # Accept user input
-    if prompt_text := st.chat_input("Ask about Sagar's research methodology, findings, or data..."):
+    prompt_text = st.chat_input("Ask about Sagar's research methodology, findings, or data...")
+    if "example_prompt" in st.session_state:
+        prompt_text = st.session_state.example_prompt
+        del st.session_state.example_prompt
+
+    if prompt_text:
         # Add user message to chat history and display it
         st.session_state.messages.append({"role": "user", "content": prompt_text})
         with st.chat_message("user"):
